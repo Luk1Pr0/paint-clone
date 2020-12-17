@@ -24,14 +24,19 @@ let isEraser = false;
 // let drawnArray = [];
 
 // Formatting Brush Size
-// function displayBrushSize() {
-
-// }
+function displayBrushSize() {
+  if (brushSlider.value < 10) {
+    brushSize.textContent = `0${brushSlider.value}`;
+  } else {
+    brushSize.textContent = brushSlider.value;
+  }
+}
 
 // Setting Brush Size
-// brushSlider.addEventListener('change', () => {
-
-// });
+brushSlider.addEventListener('change', () => {
+  currentSize = brushSlider.value;
+  displayBrushSize();
+});
 
 // Setting Brush Color
 brushColorBtn.addEventListener('change', () => {
@@ -51,7 +56,7 @@ eraser.addEventListener('click', () => {
   brushIcon.style.color = 'white';
   eraser.style.color = 'black';
   activeToolEl.textContent = 'Eraser';
-  currentColor = bucketColorBtn;
+  currentColor = bucketColor;
   currentSize = 50;
 });
 
@@ -63,7 +68,8 @@ function switchToBrush() {
   eraser.style.color = 'white';
   currentColor = `#${brushColorBtn.value}`;
   currentSize = 10;
-
+  brushSlider.value = 10;
+  displayBrushSize();
 }
 
 // Create Canvas
@@ -73,6 +79,7 @@ function createCanvas() {
   context.fillStyle = bucketColor;
   context.fillRect(0, 0, canvas.width, canvas.height);
   body.appendChild(canvas);
+  switchToBrush();
 }
 
 // // Clear Canvas
@@ -196,8 +203,8 @@ function createCanvas() {
 //   setTimeout(switchToBrush, 1500);
 // });
 
-// // Event Listener
-// brushIcon.addEventListener('click', switchToBrush);
+// Event Listener
+brushIcon.addEventListener('click', switchToBrush);
 
 // On Load
 createCanvas();
